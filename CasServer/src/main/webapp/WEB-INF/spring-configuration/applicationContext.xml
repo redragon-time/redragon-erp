@@ -68,8 +68,10 @@
         <value>classpath:messages_zh_CN</value>
     </util:list>
     
-    <bean id="servicesManager" class="org.jasig.cas.services.DefaultServicesManagerImpl"
-        c:serviceRegistryDao-ref="serviceRegistryDao" />
+
+    <bean id="servicesManager" class="org.jasig.cas.services.DefaultServicesManagerImpl">
+        <constructor-arg index="0" ref="serviceRegistryDao" />
+    </bean>    
 
     <!--
         Job to periodically reload services from service registry.
@@ -97,11 +99,13 @@
           class="org.jasig.cas.authentication.principal.ShibbolethCompatiblePersistentIdGenerator"
           p:salt="casrocks"/>
 
-    <bean id="logoutManager" class="org.jasig.cas.logout.LogoutManagerImpl"
-          c:servicesManager-ref="servicesManager"
-          c:httpClient-ref="noRedirectHttpClient"
-          c:logoutMessageBuilder-ref="logoutBuilder"
-          p:disableSingleSignOut="${slo.callbacks.disabled:false}" />
+
+    <bean id="logoutManager" class="org.jasig.cas.logout.LogoutManagerImpl">
+        <constructor-arg index="0" ref="servicesManager" />
+        <constructor-arg index="1" ref="noRedirectHttpClient" />
+        <constructor-arg index="2" ref="logoutBuilder" />
+        <property name="disableSingleSignOut" value="${slo.callbacks.disabled:false}" />
+    </bean>      
 
     <bean id="logoutBuilder" class="org.jasig.cas.logout.SamlCompliantLogoutMessageCreator" />
     

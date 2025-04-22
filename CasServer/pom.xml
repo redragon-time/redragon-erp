@@ -418,14 +418,6 @@
 	</dependency>
 	
 	<dependency>
-	    <groupId>redragon</groupId>
-	    <artifactId>redragon</artifactId>
-	    <version>1.8.7</version>
-	    <scope>system</scope>
-	    <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/redragon-1.8.7.jar</systemPath>
-	</dependency>
-	
-	<dependency>
 	    <groupId>cas-server-webapp-support</groupId>
 	    <artifactId>cas-server-webapp-support</artifactId>
 	    <version>4.0.0</version>
@@ -437,6 +429,15 @@
 
   <build>
     <plugins>
+    	
+      <plugin>
+	      <artifactId>maven-compiler-plugin</artifactId>
+		    <configuration>
+		      <source>1.8</source>
+		      <target>1.8</target>
+		    </configuration>
+	    </plugin>
+    	
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -454,6 +455,7 @@
           </webResources>
         </configuration>
       </plugin>
+      
     </plugins>
   </build>
 
